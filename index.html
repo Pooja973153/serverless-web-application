@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker</title>
+  <style>
+    /* Body styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Container */
+    .container {
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border: 2px solid #4CAF50; /* Green border */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    /* Heading */
+    h2 {
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    /* Input fields */
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    /* Button styling */
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Expense Tracker</h2>
+
+  <input id="title" placeholder="Expense Title"><br>
+  <input id="amount" placeholder="Amount"><br>
+
+  <button onclick="addExpense()">Add Expense</button>
+</div>
+
+<script>
+const API_URL = "https://9jx387xor0.execute-api.us-east-1.amazonaws.com/prod/expenses";
+
+function addExpense() {
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      title: document.getElementById("title").value,
+      amount: document.getElementById("amount").value,
+      category: "General",
+      date: new Date().toISOString()
+    })
+  })
+  .then(() => alert("Expense Added"));
+}
+</script>
+
+</body>
+</html>
